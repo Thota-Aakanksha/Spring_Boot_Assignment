@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Applied Courses</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+</head>
+<body>
+<hr>
+<div class="container">
+    <h3>Courses Applied </h3>
+
+<table class="table table-bordered table-striped m-10px">
+    <thead class="table-dark">
+       <tr>
+            <th>Title</th>
+            <th>Duration</th>
+            <th>Rating</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="temp:${studentCourses}">
+            <td th:text="${temp.title}"></td>
+            <td th:text="${temp.duration}"></td>
+            <td th:text="${temp.rating}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <hr>
+    <a th:href="@{/}">Back to home</a>
+</div>
+</body>
+</html>
