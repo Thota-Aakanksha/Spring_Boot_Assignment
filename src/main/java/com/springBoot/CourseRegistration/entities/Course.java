@@ -1,34 +1,34 @@
 package com.springBoot.CourseRegistration.entities;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
 @Table(name="course")
 @NoArgsConstructor
+@Getter @Setter
 public class Course {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
     private int id;
 
-    @Getter @Setter
+
+
+    @NotNull(message = "Title Required")
+    @Size(min = 1,message = "Title Required")
     @Column(name="title")
     private String title;
 
-    @Getter @Setter
     @Column(name="duration")
     private String duration;
 
-    @Getter @Setter
-    @Column(name="rating")
-    private double rating;
+    @Column(name="description")
+    private String description;
 
     @ManyToMany()
     @JoinTable(name="course_student",
@@ -36,13 +36,10 @@ public class Course {
             inverseJoinColumns=@JoinColumn(name="username"))
     private List<Student> students;
 
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void addStudent(Student user) {
-        if(students==null)
-            students=new ArrayList<>();
-        students.add(user);
+    public Course(int id, String title, String duration, String description) {
+        this.id = id;
+        this.title = title;
+        this.duration = duration;
+        this.description = description;
     }
 }

@@ -11,29 +11,29 @@
 
 </head>
 <body>
-<hr>
-<div class="container">
-    <h3>Courses Applied </h3>
-
-<table class="table table-bordered table-striped m-10px">
-    <thead class="table-dark">
-       <tr>
-            <th>Title</th>
-            <th>Duration</th>
-            <th>Rating</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="temp:${studentCourses}">
-            <td th:text="${temp.title}"></td>
-            <td th:text="${temp.duration}"></td>
-            <td th:text="${temp.rating}"></td>
-        </tr>
-        </tbody>
-    </table>
-
     <hr>
-    <a th:href="@{/}">Back to home</a>
-</div>
+    <div class="container">
+        <h3>Courses Applied </h3>
+
+        <table class="table table-bordered table-striped m-10px">
+            <thead class="table-dark">
+               <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Duration</th>
+               </tr>
+            </thead>
+            <tbody>
+                <tr th:each="temp:${studentCourses}">
+                    <td th:text="${temp.title}"></td>
+                    <td th:text="${temp.description}"></td>
+                    <td th:text="${temp.duration}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+        <a th:href="@{/}">Back to home</a>
+    </div>
 </body>
 </html>

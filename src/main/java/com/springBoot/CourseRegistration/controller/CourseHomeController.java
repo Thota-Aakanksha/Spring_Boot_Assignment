@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/courses")
 public class CourseHomeController {
-    private CourseService courseService;
+    private final CourseService courseService;
 
     @Autowired
     public CourseHomeController(CourseService courseService){

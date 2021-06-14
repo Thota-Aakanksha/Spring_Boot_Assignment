@@ -11,22 +11,25 @@
 </head>
 
 <body>
-<hr>
-<div class="container">
-    <h3>Welcome to Course Registration portal</h3>
+    <hr>
+    <div class="container">
+        <h3>Welcome to Course Registration portal</h3>
+
         <!--Add course visible for Admin -->
         <div sec:authorize="hasRole('Admin')">
             <a th:href="@{/admin/addCourseForm}" class="btn btn-primary btn-sm mb-3">
                 Add New Course
             </a>
         </div>
+
         <!--Courses applied visible for Student -->
         <div sec:authorize="hasRole('Student')">
             <a th:href="@{/student/getStudentCourses}" class="btn btn-primary btn-sm mb-3">
                 Applied Courses
             </a>
         </div>
-    <hr>
+        <hr>
+
         <!-- Successfull Login-->
         <div sec:authorize="isAuthenticated()">
              Welcome <span sec:authentication="name"></span><br>
@@ -38,66 +41,69 @@
              th:unless="${param.appliedCourse == null}"
              class="alert alert-success col-xs-offset-1 col-xs-10">
         </div>
+        <div th:if="${param.alreadyApplied}" class="alert alert-danger col-xs-offset-1 col-xs-10">
+            Course Already Applied
+        </div>
 
-    <h4> Courses Available are</h4>
-    <!-- courses -->
-    <table class="table table-bordered table-striped m-10px">
-        <thead class="table-dark">
-        <tr>
-            <th>Title</th>
-            <th>Duration</th>
-            <th>Rating</th>
-            <div sec:authorize="hasRole('Admin')">
-                    <th>Action</th>
-            </div>
-            <div sec:authorize="hasRole('Student')">
-                <th>Action</th>
-            </div>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="temp:${courses}">
-                <td th:text="${temp.title}"></td>
-                <td th:text="${temp.duration}"></td>
-                <td th:text="${temp.rating}"></td>
 
-            <!-- Update and delete visible for admin-->
-            <div sec:authorize="hasRole('Admin')">
-                <td><a th:href="@{/admin/updateCourseForm(courseId=${temp.id})}"
-                        class="btn btn-info btn-sm">Update</a>
-                    <a th:href="@{/admin/deleteCourse(courseId=${temp.id})}"
-                    class="btn btn-danger btn-sm"
-                    onclick="if(!(confirm('Confirm to delete the course')))return false">Delete</a>
-                </td>
-            </div>
+        <h4> Courses Available are</h4>
+        <!-- courses -->
+        <table class="table table-bordered table-striped m-10px">
+            <thead class="table-dark">
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Duration</th>
+                    <div sec:authorize="hasRole('Admin')">
+                            <th>Action</th>
+                    </div>
+                    <div sec:authorize="hasRole('Student')">
+                        <th>Action</th>
+                    </div>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="temp:${courses}">
+                    <td th:text="${temp.title}"></td>
+                    <td th:text="${temp.description}"></td>
+                    <td th:text="${temp.duration}"></td>
 
-            <!-- Apply visible for student -->
-            <div sec:authorize="hasRole('Student')">
-                <td>
-                    <a th:href="@{/student/applyCourse(courseId=${temp.id})}"
-                       class="btn btn-danger btn-sm"
-                       onclick="if(!(confirm('Confirm to apply the course')))return false">Apply</a>
-                </td>
-            </div>
+                    <!-- Update and delete visible for admin-->
+                    <div sec:authorize="hasRole('Admin')">
+                        <td><a th:href="@{/admin/updateCourseForm(courseId=${temp.id})}"
+                                class="btn btn-info btn-sm">Update</a>
+                            <a th:href="@{/admin/deleteCourse(courseId=${temp.id})}"
+                            class="btn btn-danger btn-sm"
+                            onclick="if(!(confirm('Confirm to delete the course')))return false">Delete</a>
+                        </td>
+                    </div>
 
-        </tr>
-        </tbody>
-    </table>
+                    <!-- Apply visible for student -->
+                    <div sec:authorize="hasRole('Student')">
+                        <td>
+                            <a th:href="@{/student/applyCourse(courseId=${temp.id})}"
+                               class="btn btn-danger btn-sm"
+                               onclick="if(!(confirm('Confirm to apply the course')))return false">Apply</a>
+                        </td>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
 
-    <hr>
+        <hr>
 
-    <div sec:authorize="isAuthenticated()">
-        <form action="#" th:action="@{/logout}" method="POST">
-            <input type="submit" value="Logout"/>
-        </form>
+        <div sec:authorize="isAuthenticated()">
+            <form action="#" th:action="@{/logout}" method="POST">
+                <input type="submit" value="Logout"/>
+            </form>
+        </div>
+
+        <div sec:authorize="!isAuthenticated()">
+            <form action="#" th:action="@{/loginForm}" method="GET">
+                <input type="submit" value="Login"/>
+            </form>
+        </div>
     </div>
-
-    <div sec:authorize="!isAuthenticated()">
-        <form action="#" th:action="@{/loginForm}" method="GET">
-            <input type="submit" value="Login"/>
-        </form>
-    </div>
-</div>
 
 </body>
 </html>

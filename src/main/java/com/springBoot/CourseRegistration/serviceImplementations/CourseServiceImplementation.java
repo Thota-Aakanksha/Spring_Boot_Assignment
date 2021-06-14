@@ -1,7 +1,9 @@
-package com.springBoot.CourseRegistration.services;
+package com.springBoot.CourseRegistration.serviceImplementations;
 
 import com.springBoot.CourseRegistration.dao.CourseRepository;
 import com.springBoot.CourseRegistration.entities.Course;
+import com.springBoot.CourseRegistration.exceptionHandling.CourseNotFoundException;
+import com.springBoot.CourseRegistration.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +11,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CourseServiceImplementation implements CourseService{
+public class CourseServiceImplementation implements CourseService {
 
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
 
     @Autowired
     public CourseServiceImplementation(CourseRepository courseRepository){
@@ -26,10 +28,7 @@ public class CourseServiceImplementation implements CourseService{
     @Override
     public Course findById(int id) {
         Optional<Course> course= courseRepository.findById(id);
-        if(course.isPresent())
-            return course.get();
-        else
-            throw new RuntimeException("Course not found");
+        return course.orElseThrow(()->new CourseNotFoundException("Course with id : "+id+" not found" ));
     }
 
     @Override
@@ -39,6 +38,8 @@ public class CourseServiceImplementation implements CourseService{
 
     @Override
     public void deleteById(int id) {
+        if(courseRepository.findById(id).isEmpty())
+            throw new CourseNotFoundException("Course with id : "+id+" not found" );
         courseRepository.deleteById(id);
     }
 }

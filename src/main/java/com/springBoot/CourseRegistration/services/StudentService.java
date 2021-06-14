@@ -4,6 +4,6 @@ import com.springBoot.CourseRegistration.entities.Course;
 import com.springBoot.CourseRegistration.entities.Student;
 
 public interface StudentService {
-    public Student findById(String username);
-    public void addCourse(Course course, Student student);
+    Student findById(String username);
+    void addCourse(Course course, Student student);
 }

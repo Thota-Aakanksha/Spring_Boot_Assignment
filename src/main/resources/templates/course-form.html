@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Add Course</title>
@@ -10,20 +11,28 @@
 
 </head>
 <body>
-<hr>
-Add or Update Course
-<br><br>
-<div class="content">
-    <form action="#" th:action="@{/admin/addCourse}" th:object="${course}" method="POST">
-        <input type="hidden" th:field="*{id}"/>
-        <input type="text" placeholder="Title" th:field="*{title}"
-                class="form-control mb-4 col-4"/>
-        <input type="text" placeholder="Duration" th:field="*{duration}"
-               class="form-control mb-4 col-4"/>
-        <input type="text" placeholder="Rating" th:field="*{rating}"
-               class="form-control mb-4 col-4"/>
-        <button type="submit" class="btn btn-info col-2">Save</button>
-    </form>
-</div>
+    <div class="container">
+        <hr>
+        Add or Update Course
+        <br><br>
+
+        <form action="#" th:action="@{/admin/addCourse}" th:object="${courseDto}" method="POST">
+            <input type="hidden" th:field="*{id}"/>
+            <input type="text" placeholder="Title" th:field="*{title}"
+                    class="form-control mb-4 col-4"/>
+
+            <input type="text" placeholder="Description" th:field="*{description}"
+                   class="form-control mb-4 col-4"/>
+            <input type="text" placeholder="Duration" th:field="*{duration}"
+                   class="form-control mb-4 col-4"/>
+
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}" ></div>
+
+            <button type="submit" class="btn btn-info col-2">Save</button>
+
+        </form>
+        <hr>
+        <a th:href="@{/}">Back to home</a>
+    </div>
 </body>
 </html>
